@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>バスケットボール教材：HORNS（ホーンズ）</title>
+<style>
+:root{--bg:#eef3f8;--card:#fff;--ink:#172033;--muted:#5d687b;--blue:#1769e0;--red:#e84343;--green:#1f9d68;--line:#d8dee8;--court:#dca761;--courtLine:#fff}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--ink)}
+.app{max-width:1100px;margin:auto;padding:16px}.head{display:flex;gap:12px;align-items:end;justify-content:space-between;flex-wrap:wrap}.head h1{font-size:clamp(22px,4vw,36px);margin:0}.head p{margin:4px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:16px;margin-top:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px #26354d12}.courtWrap{padding:12px}.court{position:relative;aspect-ratio:15/14;background:var(--court);border-radius:10px;overflow:hidden;border:3px solid #b77e3c}.court svg.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.player{position:absolute;width:clamp(35px,6.5vw,52px);height:clamp(35px,6.5vw,52px);border-radius:50%;display:grid;place-items:center;transform:translate(-50%,-50%);font-weight:800;color:#fff;border:3px solid #fff;box-shadow:0 3px 8px #0004;transition:left .65s ease,top .65s ease;z-index:4}.off{background:var(--blue)}.def{background:var(--red);opacity:.82}.ball:after{content:"";position:absolute;width:13px;height:13px;border-radius:50%;background:#f28c28;border:2px solid #3c2313;right:-4px;bottom:-3px}.screen{position:absolute;width:30px;height:30px;border:4px solid var(--green);border-radius:50%;transform:translate(-50%,-50%);opacity:0;transition:.25s;z-index:3}.screen.on{opacity:1}.sidebar{padding:16px;display:flex;flex-direction:column;gap:14px}.stepNo{font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.08em}.sidebar h2{font-size:22px;margin:2px 0}.desc{line-height:1.7;min-height:5.2em}.cue{background:#eef7ff;border-left:5px solid var(--blue);padding:10px 12px;border-radius:8px;line-height:1.55}.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.controls button,.tabs button{font:inherit;font-weight:700;border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px;border-radius:10px;cursor:pointer}.controls button:hover,.tabs button:hover{background:#f2f6fc}.controls .primary{background:var(--blue);color:#fff;border-color:var(--blue)}.controls button:focus-visible,.tabs button:focus-visible,input:focus-visible{outline:3px solid #f2b84b;outline-offset:2px}.speed{display:flex;gap:8px;align-items:center}.speed input{width:100%}.tabs{display:flex;flex-wrap:wrap;gap:6px}.tabs button.active{background:#172033;color:#fff}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px;vertical-align:-1px}.foot{font-size:13px;color:var(--muted);line-height:1.6}.status{min-height:1.3em;color:var(--muted);font-size:13px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.desc{min-height:auto}}
+@media(prefers-color-scheme:dark){:root{--bg:#111827;--card:#182235;--ink:#f4f7fb;--muted:#b5bfd0;--line:#344056}.controls button,.tabs button{background:#202c42;color:var(--ink)}.controls button:hover,.tabs button:hover{background:#2a3851}.cue{background:#162d49}.court{filter:saturate(.88)}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="head"><div><h1>HORNS 基本アクション</h1><p>1番が選択して攻める「ホーンズ・ピック＆ロール」の動き</p></div><div class="legend"><span><i class="dot" style="background:var(--blue)"></i>オフェンス</span><span><i class="dot" style="background:var(--red)"></i>ディフェンス</span><span><i class="dot" style="background:var(--green)"></i>スクリーン</span></div></div>
+  <section class="grid">
+    <div class="panel courtWrap">
+      <div class="court" id="court" aria-label="バスケットボールのハーフコート上でホーンズの動きを再生するアニメーション">
+        <svg class="lines" viewBox="0 0 600 560" aria-hidden="true"><rect x="10" y="10" width="580" height="540" fill="none" stroke="white" stroke-width="4"/><line x1="180" y1="10" x2="180" y2="190" stroke="white" stroke-width="4"/><line x1="420" y1="10" x2="420" y2="190" stroke="white" stroke-width="4"/><line x1="180" y1="190" x2="420" y2="190" stroke="white" stroke-width="4"/><circle cx="300" cy="190" r="70" fill="none" stroke="white" stroke-width="4"/><path d="M105 10 A195 195 0 0 0 495 10" fill="none" stroke="white" stroke-width="4"/><line x1="265" y1="30" x2="335" y2="30" stroke="white" stroke-width="5"/><circle cx="300" cy="50" r="18" fill="none" stroke="white" stroke-width="4"/><path d="M40 550 A260 260 0 0 1 560 550" fill="none" stroke="white" stroke-width="4" opacity=".7"/></svg>
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+    <aside class="panel sidebar">
+      <div><div class="stepNo" id="stepNo">STEP 1 / 6</div><h2 id="title">セット</h2></div>
+      <div class="desc" id="desc"></div><div class="cue" id="cue"></div>
+      <div class="tabs" id="tabs" aria-label="場面を選択"></div>
+      <div class="controls"><button type="button" id="prev">◀ 戻る</button><button type="button" id="play" class="primary">▶ 再生</button><button type="button" id="next">進む ▶</button></div>
+      <label class="speed">ゆっくり <input id="speed" type="range" min="700" max="2400" step="100" value="1500" aria-label="再生速度"> 速く</label>
+      <div class="status" id="status" aria-live="polite"></div>
+      <div class="foot"><b>指導のポイント：</b>最初はディフェンスなしで位置とタイミングを確認し、次に2対2、最後に5対5へ進めます。左右を反転して同じ動きを練習できます。</div>
+    </aside>
+  </section>
+</main>
+<script>
+(()=>{
+ const root=document.querySelector('.app'), court=root.querySelector('#court');
+ const base={1:[50,80],2:[15,48],3:[85,48],4:[35,34],5:[65,34],x1:[50,68],x2:[18,44],x3:[82,44],x4:[35,25],x5:[65,25]};
+ const steps=[
+  {t:'セット',d:'1番はトップでボールを持つ。4番と5番は左右のエルボー、2番と3番はコーナーに立つ。',c:'合言葉：「角を広く、角を高く」',p:base},
+  {t:'スクリーンへ',d:'ここでは5番が1番の右側へボールスクリーンに向かう。反対側の4番はすぐ動かず、ヘルプの位置を見る。',c:'5番：止まって広い壁を作る。1番：スクリーンぎりぎりを通る。',p:{...base,5:[55,64],x5:[64,51]},s:[55,64]},
+  {t:'スクリーンを使う',d:'1番は5番のスクリーンを使って右へドライブ。2番と3番はコーナーを保ち、ドライブのレーンを空ける。',c:'1番：肩をスクリーンに寄せ、リングを見る。',p:{...base,1:[68,57],5:[55,64],x1:[66,51],x5:[57,50]},s:[55,64]},
+  {t:'ロールとリフト',d:'5番はリングへロール。反対側の4番はトップ方向へリフトし、パスラインを作る。',c:'5番：腰をリングへ向ける。4番：ボールと同時に動かず一拍待つ。',p:{...base,1:[72,49],5:[53,18],4:[43,58],x1:[69,43],x5:[54,25],x4:[40,49]}},
+  {t:'3つの判断',d:'1番は①自分でシュート、②ロールした5番、③リフトした4番へのパスを判断する。コーナーへのキックアウトも残る。',c:'優先順位：「リング → ロール → 外」',p:{...base,1:[72,42],5:[53,16],4:[43,58],x1:[68,37],x5:[54,23],x4:[40,49]}},
+  {t:'フィニッシュ',d:'ゴール下が空けば1番または5番がフィニッシュ。守備が収縮したら、4番・2番・3番のノーマークへ展開する。',c:'パス後は止まらず、リバウンドと次のスペースへ。',p:{...base,1:[61,17],5:[51,12],4:[43,58],x1:[63,23],x5:[54,20],x4:[40,49]}}
+ ];
+ const els={no:root.querySelector('#stepNo'),title:root.querySelector('#title'),desc:root.querySelector('#desc'),cue:root.querySelector('#cue'),screen:root.querySelector('#screen'),tabs:root.querySelector('#tabs'),play:root.querySelector('#play'),status:root.querySelector('#status')};
+ const ids=['1','2','3','4','5','x1','x2','x3','x4','x5'];
+ ids.forEach(id=>{const d=document.createElement('div');d.className='player '+(id[0]==='x'?'def':'off')+(id==='1'?' ball':'');d.id='p'+id;d.textContent=id[0]==='x'?id.toUpperCase():id;court.appendChild(d)});
+ steps.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('aria-label',`ステップ${i+1}`);b.addEventListener('click',()=>{stop();show(i)});els.tabs.appendChild(b)});
+ let idx=0,timer=null;
+ function show(i){idx=(i+steps.length)%steps.length;const s=steps[idx];els.no.textContent=`STEP ${idx+1} / ${steps.length}`;els.title.textContent=s.t;els.desc.textContent=s.d;els.cue.textContent=s.c;ids.forEach(id=>{const p=s.p[id]||base[id],el=root.querySelector('#p'+id);el.style.left=p[0]+'%';el.style.top=p[1]+'%'});els.screen.classList.toggle('on',!!s.s);if(s.s){els.screen.style.left=s.s[0]+'%';els.screen.style.top=s.s[1]+'%'};[...els.tabs.children].forEach((b,n)=>b.classList.toggle('active',n===idx));els.status.textContent=`${idx+1}場面目：${s.t}`}
+ function stop(){clearInterval(timer);timer=null;els.play.textContent='▶ 再生'}
+ function play(){if(timer){stop();els.status.textContent='一時停止しました';return}els.play.textContent='⏸ 停止';if(idx===steps.length-1)show(0);const delay=3100-Number(root.querySelector('#speed').value);timer=setInterval(()=>{if(idx===steps.length-1){stop();els.status.textContent='再生が終了しました'}else show(idx+1)},delay)}
+ root.querySelector('#prev').addEventListener('click',()=>{stop();show(idx-1)});root.querySelector('#next').addEventListener('click',()=>{stop();show(idx+1)});els.play.addEventListener('click',play);root.querySelector('#speed').addEventListener('input',()=>{if(timer){stop();play()}});show(0);
+})();
+</script>
+</body>
+</html>
